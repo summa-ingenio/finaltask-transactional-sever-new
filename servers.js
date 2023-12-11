@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const app = express();
-const PORT = process.env.PORT || 5005;
+const port = process.env.PORT || 5005;
 
 app.use(cors());
 app.use(bodyParser.json());
