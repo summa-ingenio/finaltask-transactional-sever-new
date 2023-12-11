@@ -120,7 +120,9 @@ function checkJSONContentType(req, res, next) {
 // Get Pricing Rate
 const fetchArbitrageRate = async () => {
   try {
-    const response = await fetch("http://localhost:5013/arbitrage-rate");
+    const response = await fetch(
+      "https://final-pricing-server-accfd4e36d9a.herokuapp.com/arbitrage-rate"
+    );
     const data = await response.json();
 
     // Check if the response is successful (status code 2xx)
@@ -138,7 +140,9 @@ const fetchArbitrageRate = async () => {
 
 const usdRate = async () => {
   try {
-    const response = await fetch("http://localhost:5013/kraken-price");
+    const response = await fetch(
+      "https://final-pricing-server-accfd4e36d9a.herokuapp.com/kraken-price"
+    );
     const data = await response.json();
 
     // Check if the response is successful (status code 2xx)
@@ -156,7 +160,9 @@ const usdRate = async () => {
 
 const zarRate = async () => {
   try {
-    const response = await fetch("http://localhost:5013/luno-price");
+    const response = await fetch(
+      "https://final-pricing-server-accfd4e36d9a.herokuapp.com/luno-price"
+    );
     const data = await response.json();
 
     // Check if the response is successful (status code 2xx)
