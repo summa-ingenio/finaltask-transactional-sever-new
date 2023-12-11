@@ -5,18 +5,15 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const app = express();
-const port = 5005;
+const PORT = process.env.PORT || 5005;
 
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect(
-  "mongodb+srv://globulenaivety0c:FVbXTg2YxoRKF7JH@cluster0.gkvydqk.mongodb.net/btc?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
@@ -27,7 +24,7 @@ const User = mongoose.model("User", userSchema);
 
 // Generate a JWT token for a user
 const generateToken = (username) => {
-  return jwt.sign({ username }, "gz47uaksywlej09w6ifslftw2wijs5wm", {
+  return jwt.sign({ username }, process.env.JWT_SECRET_KEY, {
     expiresIn: "1h",
   });
 };
