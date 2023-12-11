@@ -33,6 +33,7 @@ app.post(
   "/api/register",
   checkUserEmail,
   checkJSONContentType,
+  cors(),
   async (req, res) => {
     const { username, password } = req.body;
 
@@ -64,7 +65,7 @@ app.post(
 );
 
 // Routes
-app.post("/api/login", async (req, res) => {
+app.post("/api/login", cors(), async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -197,6 +198,7 @@ app.post(
   "/api/addTask",
   checkUserEmail,
   checkJSONContentType,
+  cors(),
   async (req, res) => {
     const { task, currency } = req.body;
 
@@ -243,7 +245,7 @@ app.post(
 
 // Other routes for editing, removing, and reading tasks
 // API endpoint to get the list of registered users
-app.get("/api/users", async (req, res) => {
+app.get("/api/users", cors(), async (req, res) => {
   try {
     // This is where the database query is placed
     const users = await User.find({}, { _id: 0, password: 0 }); // Exclude _id and password
@@ -255,7 +257,7 @@ app.get("/api/users", async (req, res) => {
 });
 
 // Get all tasks for a user
-app.get("/api/getTasks", (req, res) => {
+app.get("/api/getTasks", cors(), (req, res) => {
   // Replace this with actual logic to fetch tasks from the database
   Task.find({ username: req.user.username })
     .then((tasks) => res.json(tasks))
@@ -263,7 +265,7 @@ app.get("/api/getTasks", (req, res) => {
 });
 
 // Get all tasks for a user
-app.get("/api/tasks", (req, res) => {
+app.get("/api/tasks", cors(), (req, res) => {
   // Replace this with actual logic to fetch tasks from the database
   Task.find({ username: req.user.username })
     .then((tasks) => res.json({ tasks }))
@@ -271,7 +273,7 @@ app.get("/api/tasks", (req, res) => {
 });
 
 // Edit a task
-app.put("/api/editTask/:taskId", checkJSONContentType, (req, res) => {
+app.put("/api/editTask/:taskId", cors(), checkJSONContentType, (req, res) => {
   const { taskId } = req.params;
   const { task } = req.body;
 
@@ -282,7 +284,7 @@ app.put("/api/editTask/:taskId", checkJSONContentType, (req, res) => {
 });
 
 // Remove a task
-app.delete("/api/removeTask/:taskId", (req, res) => {
+app.delete("/api/removeTask/:taskId", cors(), (req, res) => {
   const { taskId } = req.params;
 
   console.log("Received request to delete task with ID:", taskId);
