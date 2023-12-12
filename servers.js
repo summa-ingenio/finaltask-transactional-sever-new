@@ -256,13 +256,12 @@ app.get("/api/users", cors(), async (req, res) => {
   }
 });
 
-// Add a new route to delete a user by ID
-app.delete("/api/users/:userId", async (req, res) => {
-  const userId = req.params.userId;
+app.delete("/api/users/:username", async (req, res) => {
+  const userId = req.params.username;
 
   try {
-    // Find the user by ID and remove it from the database
-    const deletedUser = await User.findByIdAndRemove(userId);
+    // Find the user by ID and delete it from the database
+    const deletedUser = await User.findOneAndDelete({ username: userId });
 
     if (!deletedUser) {
       return res.status(404).json({ error: "User not found" });
