@@ -256,6 +256,25 @@ app.get("/api/users", cors(), async (req, res) => {
   }
 });
 
+// Add a new route to delete a user by ID
+app.delete("/api/users/:userId", async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    // Find the user by ID and remove it from the database
+    const deletedUser = await User.findByIdAndRemove(userId);
+
+    if (!deletedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 // Get all tasks for a user
 app.get("/api/getTasks", cors(), (req, res) => {
   // Replace this with actual logic to fetch tasks from the database
